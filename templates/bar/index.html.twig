@@ -14,7 +14,11 @@
         <ul>
             <li>{{ beer.name }}</li>
             <li>{{ beer.publishedAt|date("d/m/Y") }}</li>
-                {# {{ dump(beer.country) }} #}
+            {% if beer.country %}
+                <a href="{{ path('country_beer', { 'id' : beer.country.id }) }}">
+                    {{ beer.country.name }}
+                </a>
+            {% endif %}
         </ul>
     {% endfor %}
 </div>

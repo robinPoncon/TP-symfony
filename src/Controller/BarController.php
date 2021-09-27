@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Beer;
 use App\Repository\BeerRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BarController extends AbstractController
 {
@@ -38,10 +38,10 @@ class BarController extends AbstractController
         return new Response("Saved new beer with id " . $beer->getId());
     }
 
-    // /**
-    //  * @Route("/countrybeer/{id}", name="country_beer")
-    //  */
-    // public function showBeer() {
-
-    // }
+    /**
+     * @Route("/countrybeer/{id}", name="country_beer")
+     */
+    public function showBeer() {
+        return $this->render("");
+    }
 }
