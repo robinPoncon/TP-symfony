@@ -10,5 +10,12 @@
 
 <div class="example-wrapper">
     <img src="{{ asset('build/images/beer_00.jpg') }}" width="400px" height="400px"/>
+    {% for beer in beers %}
+        <ul>
+            <li>{{ beer.name }}</li>
+            <li>{{ beer.publishedAt|date("d/m/Y") }}</li>
+                {# {{ dump(beer.country) }} #}
+        </ul>
+    {% endfor %}
 </div>
 {% endblock %}
