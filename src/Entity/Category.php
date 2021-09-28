@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+    const SPECIAL = "special";
+    const NORMAL = "normal";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,9 +32,20 @@ class Category
      */
     private $beers;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $term;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->beers = new ArrayCollection();
+        $this->setTerm(self::NORMAL);
     }
 
     public function getId(): ?int
@@ -74,6 +88,30 @@ class Category
         if ($this->beers->removeElement($beer)) {
             $beer->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getTerm(): ?string
+    {
+        return $this->term;
+    }
+
+    public function setTerm(string $term): self
+    {
+        $this->term = $term;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
