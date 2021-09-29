@@ -7,6 +7,8 @@
 {% block body %}
 	<div class="row">
 		<div class="row">
+			<h1>{{ title}}
+			</h1>
 			{% for beer in beers %}
 				<div class="col-sm-6">
 					<div class="card card__beers">
@@ -21,18 +23,21 @@
 									{{ beer.publisheAt | date('d-m-Y h:m:s') }}
 								</p>
 							{% endif %}
-							{% if beer.price is defined  %}
-								Price:
-								{{ beer.price }}
-								&euro;
-							{% endif %}
-							<div>
-								{{ beer.description ?? 'no description' }}
-							</div>
-							<div>
-								<img src="{{ asset('build/images/beer_00.jpg') }}" width="200px" height="200px"/>
-							</div>
-                            {% include 'partials/meta.html.twig' %}
+							<p>
+								{% if beer.price is defined  %}
+									Price:
+									{{ beer.price }}
+									&euro;
+								{% endif %}
+
+								<div>
+									{{ beer.description ?? 'no description' }}
+								</div>
+								<div>
+									<img src="{{ asset('build/images/beer_00.jpg') }}" width="200px" height="200px"/>
+								</div>
+								{% include 'partials/meta.html.twig' %}
+							</p>
 						</div>
 					</div>
 				</div>

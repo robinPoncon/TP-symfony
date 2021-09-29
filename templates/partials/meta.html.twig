@@ -1,0 +1,21 @@
+{# Affichez les pays cliquables #}
+{% if beer.country %}
+	<ul>
+		<li>
+			Country :
+			<a href="{{ path('show_country_beer', { id : beer.country.id })}}">
+				{{beer.country.name}}
+			</a>
+		</li>
+	</ul>
+{% endif %}
+{% if beer.categories %}
+	<ul>
+		<li>
+			Categories :
+			{% for category in beer.categories %}
+				<li>{{category.name}}</li>
+			{% endfor %}
+		</li>
+	</ul>
+{% endif %}

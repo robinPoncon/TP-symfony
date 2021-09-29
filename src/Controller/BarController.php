@@ -2,46 +2,38 @@
 
 namespace App\Controller;
 
-use DateTime;
-use App\Entity\Beer;
+use App\Entity\Country;
 use App\Repository\BeerRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BarController extends AbstractController
 {
     /**
-     * @Route("/", name="bar")
+     * @Route("/", name="home")
      */
     public function index(BeerRepository $beerRepository): Response
     {
         $beers = $beerRepository->findAll();
+
         return $this->render('bar/index.html.twig', [
-            "beers" => $beers
+            'beers' => $beers,
+            'title' => "Page d'accueil"
         ]);
     }
 
+    // L'injection de dépendance SF est capable de récupérer l'id et de le passer à l'entité, et il retournera une instance de Country correspondant à son ID, voir le composant SF installé pour cela sensio/framework-extra-bundle
     /**
-     * @Route("/newbeer", name="create_beer")
+     * @Route("/country/{id}", name="show_country_beer")
      */
-    public function createBeer(EntityManagerInterface $manager) {
-        $beer = new Beer();
-        $beer->setName("Super beer");
-        $beer->setPublishedAt(new DateTime());
-        $beer->setDescription("Ergonomic and stylish!");
+    public function showBeerByCountry(Country $country): Response
+    {
+        // dump($country); die;
 
-        $manager->persist($beer);
-        $manager->flush();
-
-        return new Response("Saved new beer with id " . $beer->getId());
-    }
-
-    /**
-     * @Route("/countrybeer/{id}", name="country_beer")
-     */
-    public function showBeer() {
-        return $this->render("");
+        return $this->render('country/index.html.twig', [
+          'beers' => $country->getBeers() ?? [],
+          'title' => $country->getName()
+        ]);
     }
 }

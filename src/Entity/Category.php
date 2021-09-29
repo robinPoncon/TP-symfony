@@ -99,7 +99,12 @@ class Category
 
     public function setTerm(string $term): self
     {
-        $this->term = $term;
+        if (!in_array($term, [self::NORMAL, self::SPECIAL])) {
+            throw new \InvalidArgumentException("Invalid term");
+        }
+        else {
+            $this->term = $term;
+        }
 
         return $this;
     }

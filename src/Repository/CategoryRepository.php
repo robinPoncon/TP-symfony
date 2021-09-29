@@ -19,12 +19,12 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function findByTerm($term)
+    public function findByTerm(string $term, int $limit = 100)
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.term = :val')
             ->setParameter('val', $term)
-            ->setMaxResults(10)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
