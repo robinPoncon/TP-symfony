@@ -47,4 +47,16 @@ class BeerRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByCatTerm(string $term, int $beerId){
+        return $this->createQueryBuilder('b')
+            ->select("c.name, c.id")
+            ->join("b.categories", "c")
+            ->andWhere("c.term=:term AND b.id=:id")
+            ->setParameter("term", $term)
+            ->setParameter("id", $beerId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
