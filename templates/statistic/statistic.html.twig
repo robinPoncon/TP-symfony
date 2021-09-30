@@ -3,3 +3,34 @@
 {% block title %}
 	{{ title }}
 {% endblock %}
+
+{% block body %}
+    <h1>Statistiques</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Client</th>
+                <th scope="col">Catégories</th>
+                <th scope="col">Bières</th>
+                <th scope="col">Score</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <tr>
+                <td>Rob</td>
+                <td>Blonde<br>
+                    Brune<br>
+                    Rousse
+                </td>
+                <td>Bière 1<br>
+                    Bière 2
+                </td>
+                <td>
+                    12/20 <br>
+                    18/20
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

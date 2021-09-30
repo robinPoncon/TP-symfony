@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\Beer;
+use App\Entity\Client;
 use App\Entity\Country;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;

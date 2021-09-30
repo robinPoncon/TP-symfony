@@ -23,7 +23,6 @@ class ClientFixtures extends Fixture implements OrderedFixtureInterface
             $client->setName($faker->firstName());
             $client->setAge($faker->numberBetween(18, 100));
             $user->setClient($client);
-
             $manager->persist($user);
             $manager->persist($client);
         }
