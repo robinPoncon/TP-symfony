@@ -66,4 +66,13 @@ class BarController extends AbstractController
             'categories' => $categories
         ]);
     }
+
+    /**
+     * @Route("/statistic", name="statistic")
+     */
+    public function statistic() {
+        return $this->render("statistic/statistic.html.twig", [
+            "title" => "Statistic"
+        ]);
+    }
 }
