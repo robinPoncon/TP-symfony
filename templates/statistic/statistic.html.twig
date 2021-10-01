@@ -16,21 +16,19 @@
                 <th scope="col">Score</th>
             </tr>
         </thead>
-        <tbody> 
+        <tbody>
+            {% for statistic in statistics %}
             <tr>
-                <td>Rob</td>
-                <td>Blonde<br>
-                    Brune<br>
-                    Rousse
-                </td>
-                <td>Bière 1<br>
-                    Bière 2
-                </td>
+                <td>{{statistic.clientId.name}}</td>
                 <td>
-                    12/20 <br>
-                    18/20
+                    {% for category in statistic.beerId.categories %}
+                        {{category.name}} <br>
+                    {% endfor %}
                 </td>
+                <td>{{statistic.beerId.name}}</td>
+                <td>{{statistic.score}}/20</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

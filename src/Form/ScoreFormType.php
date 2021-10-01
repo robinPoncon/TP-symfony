@@ -12,9 +12,6 @@ class ScoreFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('beer_id')
-            ->add('client_id')
-            ->add('category_id')
             ->add('score')
         ;
     }

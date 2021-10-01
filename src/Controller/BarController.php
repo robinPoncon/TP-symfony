@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Beer;
+use App\Entity\User;
 use App\Entity\Country;
 use App\Entity\Category;
+use App\Entity\Statistic;
 use App\Services\Message;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\ScoreFormType;
+use App\Repository\StatisticRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BarController extends AbstractController
 {
@@ -42,6 +48,36 @@ class BarController extends AbstractController
     }
 
     /**
+     * @Route("/beer/{id}", name="show_beer")
+     */
+    public function showBeer(Beer $beer, EntityManagerInterface $manager, Request $request) {
+        $statistic = new Statistic();
+        $catNormal = $beer->getCategories()[0]->getId();
+        $client = $this->getUser()->getClient();
+        $form = $this->createForm(ScoreFormType::class, $statistic);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $statistic = $form->getData();
+            $statistic->setBeerId($beer);
+            $statistic->setCategoryId($catNormal);
+            $statistic->setClientId($client);
+            $manager->persist($statistic);
+            $manager->flush();
+
+            $this->addFlash("success", "Le score a bien été ajouté !");
+            return $this->redirectToRoute("show_beer", ["id" => $beer->getId()]);
+        }
+
+        return $this->render("beer/showBeer.html.twig", [
+            "beer" => $beer,
+            "title" => "Détail bière " . $beer->getName(),
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/category/{id}", name="show_beer_category")
      */
     public function category(Category $category){
@@ -70,9 +106,12 @@ class BarController extends AbstractController
     /**
      * @Route("/statistic", name="statistic")
      */
-    public function statistic() {
+    public function statistic(StatisticRepository $statisticRepo) {
+        $idClient = $this->getUser()->getClient()->getId();
+        $statistics = $statisticRepo->findBy(["client_id" => $idClient]);
         return $this->render("statistic/statistic.html.twig", [
-            "title" => "Statistic"
+            "title" => "Statistiques",
+            "statistics" => $statistics
         ]);
     }
 }

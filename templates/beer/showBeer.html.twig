@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+    <h1>Bière {{beer.name}}</h1>
+    <p>Date d'ajout : {{beer.publishedAt|date("d/m/Y")}}</p>
+    <p>Prix : {{beer.price}}</p>
+    <p>{{beer.description}}</p>
+    <img src="{{ asset('build/images/beer_00.jpg') }}" width="200px" height="200px"/>
+
+    {% if is_granted("ROLE_VISITOR") %}
+        {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <button type="submit" class="btn btn-primary mt-4 mb-4">Save</button>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
